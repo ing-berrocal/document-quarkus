@@ -11,6 +11,6 @@ import java.time.LocalDateTime;
  *
  * @author DELL
  */
-public record ViewProcesoCiclo(Long id,Long procesoId,String titulo, LocalDateTime fechaRegistro, LocalDate fechaValidoHasta){
+public record ViewProcesoCiclo(Long id,Long procesoPlantillaId,String plantillaTitulo,String cicloTitulo, LocalDateTime fechaRegistro, LocalDate fechaValidoHasta){
     
 }

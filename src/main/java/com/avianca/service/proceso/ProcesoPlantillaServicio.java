@@ -4,9 +4,10 @@
  */
 package com.avianca.service.proceso;
 
-import com.avianca.model.Proceso;
+import com.avianca.model.ProcesoPlantilla;
 import com.avianca.model.ProcesoTitulo;
-import com.avianca.service.procesotitulo.ProcesoTituloRepositorio;
+import com.avianca.model.exception.ItemNotFound;
+import com.avianca.service.procesorepositorioplantilla.ProcesoRepositorioPlantillaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -16,24 +17,24 @@ import java.util.List;
  * @author Lenovo
  */
 @ApplicationScoped
-public class ProcesoServicio {
+public class ProcesoPlantillaServicio {
 
-    private final ProcesoRepository repository;
-    private final ProcesoTituloRepositorio procesoTituloRepositorio;
+    private final ProcesoPlantillaRepository repository;
+    private final ProcesoRepositorioPlantillaRepository procesoTituloRepositorio;
     
-    public ProcesoServicio(ProcesoRepository repository,
-            ProcesoTituloRepositorio procesoTituloRepositorio) {
+    public ProcesoPlantillaServicio(ProcesoPlantillaRepository repository,
+            ProcesoRepositorioPlantillaRepository procesoTituloRepositorio) {
         this.repository = repository;
         this.procesoTituloRepositorio = procesoTituloRepositorio;
     }
     
-    public List<Proceso> getProcesos(){
+    public List<ProcesoPlantilla> getProcesos(){
         return repository.getProcesos();
     }
     
-    public Proceso getProcesoById(Long empresaId, Long id){
+    public ProcesoPlantilla getProcesoById(Long empresaId, Long id){
         return repository.getProcesoById(empresaId, id)
-                .orElseThrow();
+                .orElseThrow(()->ItemNotFound.getInstance("No existe plantilla de proceso"));
     }
     
     public List<ProcesoTitulo> getRepositorios(Long procesoId){
@@ -41,7 +42,7 @@ public class ProcesoServicio {
     }
     
     @Transactional
-    public Proceso agregar(Long empresaId, Proceso proceso){
+    public ProcesoPlantilla agregar(Long empresaId, ProcesoPlantilla proceso){
                 
         return repository.crearProceso(proceso);
     }

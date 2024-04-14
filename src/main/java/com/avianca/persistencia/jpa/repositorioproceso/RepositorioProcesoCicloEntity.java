@@ -4,7 +4,7 @@
  */
 package com.avianca.persistencia.jpa.repositorioproceso;
 
-import com.avianca.persistencia.jpa.util.RepositorioTituloProcesoPK;
+import com.avianca.persistencia.jpa.util.ProcesoRepositorioPlantillaPK;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
@@ -26,7 +26,7 @@ public class RepositorioProcesoCicloEntity {
       @AttributeOverride(name = "repositorioTituloId", column = @Column(name = "REPOSITORIO_ID")),
       @AttributeOverride(name = "procesoId", column = @Column(name = "PROCESO_CICLO_ID"))
     })
-    private RepositorioTituloProcesoPK repositorioTituloProcesoPK;
+    private ProcesoRepositorioPlantillaPK repositorioTituloProcesoPK;
     @Column(name = "FECHA_REGISTRO",nullable = false)
     private LocalDateTime fechaCreacion;
     
@@ -35,11 +35,11 @@ public class RepositorioProcesoCicloEntity {
     @JoinColumn(name = "proceso_ciclo_id",insertable = false)
     private ProcesoCicloEntity procesoCiclo;*/
 
-    public RepositorioTituloProcesoPK getRepositorioTituloProcesoPK() {
+    public ProcesoRepositorioPlantillaPK getRepositorioTituloProcesoPK() {
         return repositorioTituloProcesoPK;
     }
 
-    public void setRepositorioTituloProcesoPK(RepositorioTituloProcesoPK repositorioTituloProcesoPK) {
+    public void setRepositorioTituloProcesoPK(ProcesoRepositorioPlantillaPK repositorioTituloProcesoPK) {
         this.repositorioTituloProcesoPK = repositorioTituloProcesoPK;
     }
 
@@ -53,7 +53,7 @@ public class RepositorioProcesoCicloEntity {
     
     public static RepositorioProcesoCicloEntity getInstance(Long repositorioId,Long procesoCicloId){
         RepositorioProcesoCicloEntity entity = new RepositorioProcesoCicloEntity();
-        entity.setRepositorioTituloProcesoPK(new RepositorioTituloProcesoPK(repositorioId, procesoCicloId));
+        entity.setRepositorioTituloProcesoPK(new ProcesoRepositorioPlantillaPK(repositorioId, procesoCicloId));
         entity.setFechaCreacion(LocalDateTime.now());
         return entity;
     }

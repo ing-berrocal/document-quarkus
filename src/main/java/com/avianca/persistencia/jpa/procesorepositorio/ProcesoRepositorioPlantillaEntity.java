@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.avianca.persistencia.jpa.repositorioproceso;
+package com.avianca.persistencia.jpa.procesorepositorio;
 
-import com.avianca.persistencia.jpa.util.RepositorioTituloProcesoPK;
+import com.avianca.persistencia.jpa.util.ProcesoRepositorioPlantillaPK;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -15,22 +15,22 @@ import java.time.LocalDateTime;
  *
  * @author Lenovo
  */
-@Table(name = "REPOSITORIO_TITULO_PROCESO")
+@Table(name = "PROCESO_PLANTILLA_REPOSITORIO_PLANTILLA")
 @Entity
-public class RepositorioTituloProcesoEntity {
+public class ProcesoRepositorioPlantillaEntity {
 
     @EmbeddedId
-    private RepositorioTituloProcesoPK repositorioTituloProcesoPK;
+    private ProcesoRepositorioPlantillaPK repositorioTituloProcesoPK;
     @Column(name = "FECHA_REGISTRO",nullable = false)
     private LocalDateTime fechaCreacion;
     @Column(name = "ES_OBLIGATORIO",nullable = false)
     private Boolean esObligatorio;
 
-    public RepositorioTituloProcesoPK getRepositorioTituloProcesoPK() {
+    public ProcesoRepositorioPlantillaPK getRepositorioTituloProcesoPK() {
         return repositorioTituloProcesoPK;
     }
 
-    public void setRepositorioTituloProcesoPK(RepositorioTituloProcesoPK repositorioTituloProcesoPK) {
+    public void setRepositorioTituloProcesoPK(ProcesoRepositorioPlantillaPK repositorioTituloProcesoPK) {
         this.repositorioTituloProcesoPK = repositorioTituloProcesoPK;
     }
 
@@ -50,9 +50,9 @@ public class RepositorioTituloProcesoEntity {
         this.esObligatorio = esObligatorio;
     } 
     
-    public static RepositorioTituloProcesoEntity getInstance(Long repositorioTituloId,Long procesoId){
-        RepositorioTituloProcesoEntity entity = new RepositorioTituloProcesoEntity();
-        entity.setRepositorioTituloProcesoPK(new RepositorioTituloProcesoPK(repositorioTituloId, procesoId));
+    public static ProcesoRepositorioPlantillaEntity getInstance(Long repositorioTituloId,Long procesoId){
+        ProcesoRepositorioPlantillaEntity entity = new ProcesoRepositorioPlantillaEntity();
+        entity.setRepositorioTituloProcesoPK(new ProcesoRepositorioPlantillaPK(repositorioTituloId, procesoId));
         entity.setFechaCreacion(LocalDateTime.now());
         entity.setEsObligatorio(Boolean.TRUE);
         return entity;

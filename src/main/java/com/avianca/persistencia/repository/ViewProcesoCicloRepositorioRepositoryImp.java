@@ -25,8 +25,8 @@ public class ViewProcesoCicloRepositorioRepositoryImp implements ViewProcesoCicl
     public final AgroalDataSource datasource;
 
     private final String SQL = """
-                               SELECT id, repositorio_titulo_id, codigo, titulo, tiene_fecha_vencimiento, repositorio_id, formato, fecha_vencimiento
-                               FROM public.view_proceso_ciclo_repositorio
+                               SELECT id, repositorio_plantilla_id, codigo, titulo, tiene_fecha_vencimiento, repositorio_ciclo_id, formato, fecha_vencimiento
+                               FROM public.view_proceso_ciclo_repositorio_ciclo
                                WHERE proceso_ciclo_id = ?;
                                """;
     
@@ -61,6 +61,7 @@ public class ViewProcesoCicloRepositorioRepositoryImp implements ViewProcesoCicl
             }
         }
         catch(SQLException e){
+            System.err.println("Error");
         }
         return resultado;
     }

@@ -4,31 +4,30 @@
  */
 package com.avianca.resource;
 
-import com.avianca.model.RepositorioTitulo;
-import com.avianca.resource.request.RepositorioTituloRequest;
+import com.avianca.model.RepositorioPlantilla;
+import com.avianca.resource.request.RepositorioPlantillaRequest;
 import com.avianca.resource.response.Pagination;
 import com.avianca.resource.response.ResponseCollection;
-import com.avianca.service.repositorio.RepositorioTituloServicio;
+import com.avianca.service.repositorio.RepositorioPlantillaServicio;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import java.util.List;
 
 /**
  *
  * @author Lenovo
  */
-@Path("/repositorio/titulo")
+@Path("/repositorio/plantilla")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class RepositorioTituloResource {
+public class RepositorioPlantillaResource {
     
-    private final RepositorioTituloServicio repositorioTituloServicio;
+    private final RepositorioPlantillaServicio repositorioTituloServicio;
     
-    public RepositorioTituloResource(RepositorioTituloServicio repositorioTituloServicio){
+    public RepositorioPlantillaResource(RepositorioPlantillaServicio repositorioTituloServicio){
         this.repositorioTituloServicio = repositorioTituloServicio;
     }
     
@@ -43,9 +42,9 @@ public class RepositorioTituloResource {
     }
 
     @POST
-    public RepositorioTitulo agregar(RepositorioTituloRequest itemRequest){
+    public RepositorioPlantilla agregar(RepositorioPlantillaRequest itemRequest){
         
-        RepositorioTitulo item = new RepositorioTitulo(null,
+        RepositorioPlantilla item = new RepositorioPlantilla(null,
                 itemRequest.codigo(), 
                 itemRequest.titulo(), 
                 itemRequest.descripcion(), 

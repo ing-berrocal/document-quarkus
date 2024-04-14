@@ -11,6 +11,8 @@ import java.time.LocalDate;
  * @author Lenovo
  */
 public record ProcesoCicloRequest (
+        Long procesoPlantillaId,
+        String titulo,
         Long terceroId,
         LocalDate fechaVencimiento) {
 }

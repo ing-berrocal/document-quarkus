@@ -8,6 +8,6 @@ package com.avianca.model;
  *
  * @author Lenovo
  */
-public record Proceso(Long id, String titulo, Boolean asignaTercero){
+public record ProcesoPlantilla(Long id, String codigo,String titulo, Boolean asignaTercero){
     
 }

@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
  *
  * @author Lenovo
  */
-@Table(name = "REPOSITORIO_TITULO")
+@Table(name = "REPOSITORIO_PLANTILLA")
 @Entity
-public class RepositorioTituloEntity {
+public class RepositorioPlantillaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,9 +10,9 @@ import java.time.LocalDate;
  *
  * @author Lenovo
  */
-public record RepositorioEsquema(
+public record RepositorioCiclo(
     Long id,    
-    Long repositorioTituloId,    
+    Long repositorioPlantillaId,    
     String codigo,
     String formato,
     LocalDate fechaVencimiento){

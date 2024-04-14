@@ -4,11 +4,11 @@
  */
 package com.avianca.service.proceso;
 
-import com.avianca.model.Proceso;
+import com.avianca.model.ProcesoPlantilla;
 import com.avianca.model.ProcesoCiclo;
-import com.avianca.model.RepositorioEsquema;
-import com.avianca.service.procesotitulo.ProcesoTituloRepositorio;
-import com.avianca.service.repositorio.RepositorioEsquemaRepository;
+import com.avianca.model.RepositorioCiclo;
+import com.avianca.persistencia.repository.ProcesoRepositorioPlantillaRepositoryImp;
+import com.avianca.service.repositorio.RepositorioCicloRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +30,7 @@ public class ProcesoCicloServicioTest {
     
     
     ProcesoCicloRepository procesoCicloRepository = Mockito.mock(ProcesoCicloRepository.class);
-    ProcesoTituloRepositorio procesoTituloRepositorio = Mockito.mock(ProcesoTituloRepositorio.class);
+    ProcesoRepositorioPlantillaRepositoryImp procesoTituloRepositorio = Mockito.mock(ProcesoRepositorioPlantillaRepositoryImp.class);
     
     @BeforeAll
     public static void setUpClass() {
@@ -54,7 +54,7 @@ public class ProcesoCicloServicioTest {
     @Test
     public void noExisteProceso() {
         
-        ProcesoRepository repository = Mockito.mock(ProcesoRepository.class);
+        ProcesoPlantillaRepository repository = Mockito.mock(ProcesoPlantillaRepository.class);
         
         Long empresaId = 1L;
         Long procesoId = 1L;
@@ -69,7 +69,7 @@ public class ProcesoCicloServicioTest {
                 procesoTituloRepositorio, null,null,null,null);
 
         RuntimeException assertThrows = Assertions.assertThrows(RuntimeException.class, ()->{
-            instance.agregar(empresaId, procesoId, terceroId);
+            instance.agregar(empresaId, null);
         });
         
         Assertions.assertEquals("No existe proceso", assertThrows.getMessage());
@@ -78,14 +78,14 @@ public class ProcesoCicloServicioTest {
     @Test
     public void guardado() {
         
-        ProcesoRepository repository = Mockito.mock(ProcesoRepository.class);
+        ProcesoPlantillaRepository repository = Mockito.mock(ProcesoPlantillaRepository.class);
         
         Long empresaId = 1L;
         Long procesoId = 1L;
         Long terceroId = null;
         
         Mockito.when(repository.getProcesoById(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong()))
-                .thenReturn(Optional.of(new Proceso(null,null,null)));
+                .thenReturn(Optional.of(new ProcesoPlantilla(null,null,null,null)));
         
         ProcesoCicloServicio instance = new ProcesoCicloServicio(
                 repository, 
@@ -93,7 +93,7 @@ public class ProcesoCicloServicioTest {
                 procesoTituloRepositorio, null,null,null,null);
 
         
-        instance.agregar(empresaId, procesoId, terceroId);
+        instance.agregar(empresaId, null);
         
         
         //Assertions.assertEquals("No existe proceso", assertThrows.getMessage());
@@ -109,7 +109,7 @@ public class ProcesoCicloServicioTest {
         Long procesoId = null;
         Long terceroId = null;
         ProcesoCicloServicio instance = null;
-        instance.agregar(empresaId, procesoId, terceroId);
+        instance.agregar(empresaId, null);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -121,8 +121,8 @@ public class ProcesoCicloServicioTest {
     public void testAgregarRepositorio() {
         
         ProcesoCicloRepository procesoCicloRepository = Mockito.mock(ProcesoCicloRepository.class);
-        ProcesoRepository repository = Mockito.mock(ProcesoRepository.class);
-        RepositorioEsquemaRepository repositorioEsquemaRepository = Mockito.mock(RepositorioEsquemaRepository.class);
+        ProcesoPlantillaRepository repository = Mockito.mock(ProcesoPlantillaRepository.class);
+        RepositorioCicloRepository repositorioEsquemaRepository = Mockito.mock(RepositorioCicloRepository.class);
         
         Long empresaId = 1L;
         Long cicloId = 1L;
@@ -136,7 +136,7 @@ public class ProcesoCicloServicioTest {
                 .thenReturn(Optional.of(new Proceso(1L,null,null)));*/
         
         Mockito.when(repositorioEsquemaRepository.getById(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong()))
-                .thenReturn(Optional.of(new RepositorioEsquema(0L, 1L, null, null, LocalDate.MIN)));
+                .thenReturn(Optional.of(new RepositorioCiclo(0L, 1L, null, null, LocalDate.MIN)));
         
         Mockito.when(procesoTituloRepositorio.existeTituloEnRepostorio(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong()))
                 .thenReturn(Boolean.TRUE);

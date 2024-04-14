@@ -5,8 +5,8 @@
 package com.avianca.service.repositorio;
 
 import com.avianca.model.RepositorioData;
-import com.avianca.model.RepositorioEsquema;
-import com.avianca.model.RepositorioTitulo;
+import com.avianca.model.RepositorioCiclo;
+import com.avianca.model.RepositorioPlantilla;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -51,7 +51,7 @@ public class RepositorioServicioTest {
     public void agregarEsquemaNoExisteTitulo() {
         
         RepositorioTituloRepositorio repositorioTituloRepositorioMock = Mockito.mock(RepositorioTituloRepositorio.class);
-        RepositorioEsquemaRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioEsquemaRepository.class);
+        RepositorioCicloRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioCicloRepository.class);
         RepositorioDataRepository repositorioDataRepositoryMock = Mockito.mock(RepositorioDataRepository.class);
         
         RepositorioServicio repositorioservicio = new RepositorioServicio(
@@ -63,7 +63,7 @@ public class RepositorioServicioTest {
         Mockito.when(repositorioTituloRepositorioMock.obtenerById(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(), ArgumentMatchers.anyString()))
                 .thenReturn(Optional.empty());
         
-        RepositorioEsquema esquema = new RepositorioEsquema(null,null,"001", "pdf", LocalDate.MIN);
+        RepositorioCiclo esquema = new RepositorioCiclo(null,null,"001", "pdf", LocalDate.MIN);
         
         RuntimeException assertThrows = assertThrows(RuntimeException.class, ()->{
             repositorioservicio.agregarEsquema(Long.valueOf("0"), esquema);
@@ -82,7 +82,7 @@ public class RepositorioServicioTest {
         String codigo = "A0001";
         
         RepositorioTituloRepositorio repositorioTituloRepositorioMock = Mockito.mock(RepositorioTituloRepositorio.class);
-        RepositorioEsquemaRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioEsquemaRepository.class);
+        RepositorioCicloRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioCicloRepository.class);
         RepositorioDataRepository repositorioDataRepositoryMock = Mockito.mock(RepositorioDataRepository.class);
         
         RepositorioServicio repositorioservicio = new RepositorioServicio(
@@ -92,16 +92,16 @@ public class RepositorioServicioTest {
         );
         
         Mockito.when(repositorioTituloRepositorioMock.obtenerById(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(), ArgumentMatchers.eq(codigo)))
-                .thenReturn(Optional.of(new RepositorioTitulo(0L,codigo, "Cedula", null, Boolean.FALSE, LocalDateTime.MIN,null)));
+                .thenReturn(Optional.of(new RepositorioPlantilla(0L,codigo, "Cedula", null, Boolean.FALSE, LocalDateTime.MIN,null)));
         
         Mockito.doAnswer(answer->{
-            return new RepositorioEsquema(Long.valueOf("1"),null,null,null,null);
+            return new RepositorioCiclo(Long.valueOf("1"),null,null,null,null);
         }).when(repositorioEsquemaRepositoryMock)
-                .agregar(ArgumentMatchers.anyLong(), ArgumentMatchers.any(RepositorioEsquema.class));
+                .agregar(ArgumentMatchers.anyLong(), ArgumentMatchers.any(RepositorioCiclo.class));
         
-        RepositorioEsquema esquema = new RepositorioEsquema(null,null,codigo, "pdf", LocalDate.MIN);
+        RepositorioCiclo esquema = new RepositorioCiclo(null,null,codigo, "pdf", LocalDate.MIN);
         
-        RepositorioEsquema esquemaAgregado = repositorioservicio.agregarEsquema(Long.valueOf("0"), esquema);
+        RepositorioCiclo esquemaAgregado = repositorioservicio.agregarEsquema(Long.valueOf("0"), esquema);
         
         assertEquals(esquemaAgregado.id(), Long.valueOf("1"));
     }
@@ -112,7 +112,7 @@ public class RepositorioServicioTest {
         String codigo = "A0001";
         
         RepositorioTituloRepositorio repositorioTituloRepositorioMock = Mockito.mock(RepositorioTituloRepositorio.class);
-        RepositorioEsquemaRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioEsquemaRepository.class);
+        RepositorioCicloRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioCicloRepository.class);
         RepositorioDataRepository repositorioDataRepositoryMock = Mockito.mock(RepositorioDataRepository.class);
         
         RepositorioServicio repositorioservicio = new RepositorioServicio(
@@ -122,21 +122,21 @@ public class RepositorioServicioTest {
         );
         
         Mockito.when(repositorioTituloRepositorioMock.obtenerById(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(), ArgumentMatchers.eq(codigo)))
-                .thenReturn(Optional.of(new RepositorioTitulo(0L,codigo, "Cedula", null, Boolean.TRUE, LocalDateTime.MIN,null)));
+                .thenReturn(Optional.of(new RepositorioPlantilla(0L,codigo, "Cedula", null, Boolean.TRUE, LocalDateTime.MIN,null)));
         
         LocalDate now = LocalDate.now();
 
         LocalDate afterNow = now.plusMonths(5);
         
         Mockito.doAnswer(answer->{
-            return new RepositorioEsquema(Long.valueOf("1"),null,null,null,
+            return new RepositorioCiclo(Long.valueOf("1"),null,null,null,
             afterNow);
         }).when(repositorioEsquemaRepositoryMock)
-                .agregar(ArgumentMatchers.anyLong(), ArgumentMatchers.any(RepositorioEsquema.class));
+                .agregar(ArgumentMatchers.anyLong(), ArgumentMatchers.any(RepositorioCiclo.class));
         
-        RepositorioEsquema esquema = new RepositorioEsquema(null,null,codigo, "pdf", LocalDate.MAX);
+        RepositorioCiclo esquema = new RepositorioCiclo(null,null,codigo, "pdf", LocalDate.MAX);
         
-        RepositorioEsquema esquemaAgregado = repositorioservicio.agregarEsquema(Long.valueOf("0"), esquema);
+        RepositorioCiclo esquemaAgregado = repositorioservicio.agregarEsquema(Long.valueOf("0"), esquema);
         
         assertEquals(esquemaAgregado.id(), Long.valueOf("1"));
     }
@@ -147,7 +147,7 @@ public class RepositorioServicioTest {
         String codigo = "A0001";
         
         RepositorioTituloRepositorio repositorioTituloRepositorioMock = Mockito.mock(RepositorioTituloRepositorio.class);
-        RepositorioEsquemaRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioEsquemaRepository.class);
+        RepositorioCicloRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioCicloRepository.class);
         RepositorioDataRepository repositorioDataRepositoryMock = Mockito.mock(RepositorioDataRepository.class);
         
         RepositorioServicio repositorioservicio = new RepositorioServicio(
@@ -157,17 +157,17 @@ public class RepositorioServicioTest {
         );
         
         Mockito.when(repositorioTituloRepositorioMock.obtenerById(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(),ArgumentMatchers.eq(codigo)))
-                .thenReturn(Optional.of(new RepositorioTitulo(0L,codigo, "Cedula", null, Boolean.TRUE, LocalDateTime.MIN,null)));
+                .thenReturn(Optional.of(new RepositorioPlantilla(0L,codigo, "Cedula", null, Boolean.TRUE, LocalDateTime.MIN,null)));
         
         LocalDate now = LocalDate.now();
 
         Mockito.doAnswer(answer->{
-            return new RepositorioEsquema(Long.valueOf("1"),null,null,null,
+            return new RepositorioCiclo(Long.valueOf("1"),null,null,null,
             null);
         }).when(repositorioEsquemaRepositoryMock)
-                .agregar(ArgumentMatchers.anyLong(), ArgumentMatchers.any(RepositorioEsquema.class));
+                .agregar(ArgumentMatchers.anyLong(), ArgumentMatchers.any(RepositorioCiclo.class));
         
-        RepositorioEsquema esquema = new RepositorioEsquema(null,null,codigo, "pdf", now);
+        RepositorioCiclo esquema = new RepositorioCiclo(null,null,codigo, "pdf", now);
         
         RuntimeException assertThrows = assertThrows(RuntimeException.class, ()->{
             repositorioservicio.agregarEsquema(Long.valueOf("0"), esquema);
@@ -184,7 +184,7 @@ public class RepositorioServicioTest {
         Long codigo = 1L;
         
         RepositorioTituloRepositorio repositorioTituloRepositorioMock = Mockito.mock(RepositorioTituloRepositorio.class);
-        RepositorioEsquemaRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioEsquemaRepository.class);
+        RepositorioCicloRepository repositorioEsquemaRepositoryMock = Mockito.mock(RepositorioCicloRepository.class);
         RepositorioDataRepository repositorioDataRepositoryMock = Mockito.mock(RepositorioDataRepository.class);
         
         RepositorioServicio repositorioservicio = new RepositorioServicio(
@@ -194,7 +194,7 @@ public class RepositorioServicioTest {
         );
         
         Mockito.when(repositorioEsquemaRepositoryMock.getById(ArgumentMatchers.anyLong(),ArgumentMatchers.eq(codigo)))
-                .thenReturn(Optional.of(new RepositorioEsquema(codigo,null,null,null,null)));
+                .thenReturn(Optional.of(new RepositorioCiclo(codigo,null,null,null,null)));
         
         
         Mockito.doAnswer(answer->{

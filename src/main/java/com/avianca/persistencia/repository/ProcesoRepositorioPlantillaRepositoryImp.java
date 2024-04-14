@@ -4,12 +4,12 @@
  */
 package com.avianca.persistencia.repository;
 
-import com.avianca.model.Proceso;
+import com.avianca.model.ProcesoPlantilla;
 import com.avianca.model.ProcesoTitulo;
-import com.avianca.persistencia.jpa.repositorioproceso.RepositorioTituloProcesoEntity;
-import com.avianca.persistencia.jpa.repositorioproceso.RepositorioTituloProcesoPanache;
+import com.avianca.persistencia.jpa.procesorepositorio.RepositorioTituloProcesoPanache;
+import com.avianca.persistencia.jpa.procesorepositorio.ProcesoRepositorioPlantillaEntity;
 import com.avianca.persistencia.jpa.view.ViewRepositorioTituloProcesoEntity;
-import com.avianca.service.procesotitulo.ProcesoTituloRepositorio;
+import com.avianca.service.procesorepositorioplantilla.ProcesoRepositorioPlantillaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import java.util.List;
@@ -20,20 +20,20 @@ import java.util.stream.Stream;
  * @author Lenovo
  */
 @ApplicationScoped
-public class ProcesoTituloRepositoryImp implements ProcesoTituloRepositorio{
+public class ProcesoRepositorioPlantillaRepositoryImp implements ProcesoRepositorioPlantillaRepository{
 
     private final EntityManager em;
     
     private final RepositorioTituloProcesoPanache repositorioTituloProcesoPanache;
     
-    public ProcesoTituloRepositoryImp(RepositorioTituloProcesoPanache repositorioTituloProcesoPanache,
+    public ProcesoRepositorioPlantillaRepositoryImp(RepositorioTituloProcesoPanache repositorioTituloProcesoPanache,
             EntityManager em){
         this.repositorioTituloProcesoPanache = repositorioTituloProcesoPanache;
         this.em = em;
     }
     
     @Override
-    public List<Proceso> getProcesos(Long repositorioTituloId) {
+    public List<ProcesoPlantilla> getProcesos(Long repositorioTituloId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -53,10 +53,10 @@ public class ProcesoTituloRepositoryImp implements ProcesoTituloRepositorio{
     }
 
     @Override
-    public void registraTituloAProceso(Long repositorioTituloId, Long[] procesos) {
+    public void registraPlantillaProceso(Long repositorioTituloId, Long[] procesos) {
         
         repositorioTituloProcesoPanache.persist(
-        Stream.of(procesos).map(proceso-> RepositorioTituloProcesoEntity.getInstance(repositorioTituloId, proceso) )
+        Stream.of(procesos).map(proceso-> ProcesoRepositorioPlantillaEntity.getInstance(repositorioTituloId, proceso) )
         );
     }
 

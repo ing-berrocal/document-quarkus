@@ -4,7 +4,7 @@
  */
 package com.avianca.persistencia.jpa.view;
 
-import com.avianca.persistencia.jpa.util.RepositorioTituloProcesoPK;
+import com.avianca.persistencia.jpa.util.ProcesoRepositorioPlantillaPK;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  *
  * @author Lenovo
  */
-@Table(name = "VIEW_REPOSITORIO_TITULO_PROCESO")
+@Table(name = "view_proceso_plantilla_repositorio_plantilla")
 @Entity
 @NamedQueries({
     @NamedQuery(name = ViewRepositorioTituloProcesoEntity.BYPROCESOID,query = "SELECT v FROM ViewRepositorioTituloProcesoEntity v WHERE v.empresaId = :empresaId AND v.repositorioTituloProcesoPK.procesoId = :procesoId")
@@ -27,7 +27,7 @@ public class ViewRepositorioTituloProcesoEntity{
     public static final String BYPROCESOID = "ViewRepositorioTituloProcesoEntity.PROCESOID";
     
     @EmbeddedId
-    private RepositorioTituloProcesoPK repositorioTituloProcesoPK;
+    private ProcesoRepositorioPlantillaPK repositorioTituloProcesoPK;
     @Column(name = "FECHA_REGISTRO",nullable = false)
     private LocalDateTime fechaCreacion;
     @Column(name = "ES_OBLIGATORIO",nullable = false)
@@ -39,11 +39,11 @@ public class ViewRepositorioTituloProcesoEntity{
     @Column(name = "TITULO",nullable = false)
     private String titulo;
     
-    public RepositorioTituloProcesoPK getRepositorioTituloProcesoPK() {
+    public ProcesoRepositorioPlantillaPK getRepositorioTituloProcesoPK() {
         return repositorioTituloProcesoPK;
     }
 
-    public void setRepositorioTituloProcesoPK(RepositorioTituloProcesoPK repositorioTituloProcesoPK) {
+    public void setRepositorioTituloProcesoPK(ProcesoRepositorioPlantillaPK repositorioTituloProcesoPK) {
         this.repositorioTituloProcesoPK = repositorioTituloProcesoPK;
     }
 

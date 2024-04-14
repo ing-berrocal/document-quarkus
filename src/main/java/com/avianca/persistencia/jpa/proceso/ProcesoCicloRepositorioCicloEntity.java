@@ -6,31 +6,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
-@Table(name = "PROCESO_CICLO_REPOSITORIO")
+@Table(name = "proceso_ciclo_repositorio_ciclo")
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "ProcesoCicloRepositorioEntity.OBTENER_POR_PROCESOS", query = "UPDATE ProcesoCicloRepositorioEntity P SET repositorioId = :repositorioId WHERE P.procesoCicloId = :procesoCicloId AND P.repositorioTituloId = :repositorioTituloId")
+    @NamedQuery(name = "ProcesoCicloRepositorioCicloEntity.OBTENER_POR_PROCESOS", query = "UPDATE ProcesoCicloRepositorioCicloEntity P SET repositorioCicloId = :repositorioId WHERE P.procesoCicloId = :procesoCicloId AND P.repositorioPlantillaId = :repositorioTituloId")
 })
-public class ProcesoCicloRepositorioEntity {
+public class ProcesoCicloRepositorioCicloEntity {
  
-    public static final String OBTENER_POR_PROCESOS = "#ProcesoCicloRepositorioEntity.OBTENER_POR_PROCESOS";
+    public static final String OBTENER_POR_PROCESOS = "#ProcesoCicloRepositorioCicloEntity.OBTENER_POR_PROCESOS";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;    
     @Column(name = "PROCESO_CICLO_ID")
     private Long procesoCicloId;    
-    @Column(name = "REPOSITORIO_TITULO_ID")
-    private Long repositorioTituloId;
-    @Column(name = "REPOSITORIO_ID")
-    private Long repositorioId;
+    @Column(name = "REPOSITORIO_PLANTILLA_ID")
+    private Long repositorioPlantillaId;
+    @Column(name = "REPOSITORIO_CICLO_ID")
+    private Long repositorioCicloId;
     @NotNull
     @Column(name = "FECHA_REGISTRO",nullable = false)
     private LocalDateTime fechaCreacion;
@@ -51,20 +49,20 @@ public class ProcesoCicloRepositorioEntity {
         this.procesoCicloId = procesoCicloId;
     }
 
-    public Long getRepositorioTituloId() {
-        return repositorioTituloId;
+    public Long getRepositorioPlantillaId() {
+        return repositorioPlantillaId;
     }
 
-    public void setRepositorioTituloId(Long repositorioTituloId) {
-        this.repositorioTituloId = repositorioTituloId;
+    public void setRepositorioPlantillaId(Long repositorioPlantillaId) {
+        this.repositorioPlantillaId = repositorioPlantillaId;
     }
 
-    public Long getRepositorioId() {
-        return repositorioId;
+    public Long getRepositorioCicloId() {
+        return repositorioCicloId;
     }
 
-    public void setRepositorioId(Long repositorioId) {
-        this.repositorioId = repositorioId;
+    public void setRepositorioCicloId(Long repositorioCicloId) {
+        this.repositorioCicloId = repositorioCicloId;
     }
 
     public LocalDateTime getFechaCreacion() {

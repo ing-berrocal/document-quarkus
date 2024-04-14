@@ -4,7 +4,7 @@
  */
 package com.avianca.service.repositorio;
 
-import com.avianca.model.RepositorioTitulo;
+import com.avianca.model.RepositorioPlantilla;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +13,8 @@ import java.util.Optional;
  * @author Lenovo
  */
 public interface RepositorioTituloRepositorio {
-    public List<RepositorioTitulo> getTitulos(Long empresaId);
-    public RepositorioTitulo agregar(Long empresaId, RepositorioTitulo item);
-    public Optional<RepositorioTitulo> obtenerById(Long empresaId, Long id, String codigo);
+    public List<RepositorioPlantilla> getTitulos(Long empresaId);
+    public RepositorioPlantilla agregar(Long empresaId, RepositorioPlantilla item);
+    public Optional<RepositorioPlantilla> obtenerById(Long empresaId, Long id, String codigo);
+    public Optional<RepositorioPlantilla> obtenerByCodigo(Long empresaId, String codigo);
 }

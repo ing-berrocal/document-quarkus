@@ -26,14 +26,14 @@ public class ViewProcesoCicloRepositoryImp implements ViewProcesoCicloRepository
     @Override
     public List<ViewProcesoCiclo> getProcesos() {
         return viewProcesoCicloPanache.streamAll()
-                .map(vp->new ViewProcesoCiclo(vp.getId(), vp.getProcesoId(), vp.getTitulo(), vp.getFechaCreacion(), vp.getFechaValidoHasta()))
+                .map(vp->new ViewProcesoCiclo(vp.getId(), vp.getPlantillaId(), vp.getPantillaTitulo(), vp.getCicloTitulo(), vp.getFechaCreacion(), vp.getFechaValidoHasta()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<ViewProcesoCiclo> getProcesoById(Long id, Long empresaId) {
         return viewProcesoCicloPanache.findByIdOptional(id)
-                .map(vp->new ViewProcesoCiclo(vp.getId(), vp.getProcesoId(),vp.getTitulo(), vp.getFechaCreacion(), vp.getFechaValidoHasta()));
+                .map(vp->new ViewProcesoCiclo(vp.getId(), vp.getPlantillaId(), vp.getPantillaTitulo(), vp.getCicloTitulo(), vp.getFechaCreacion(), vp.getFechaValidoHasta()));
     }
     
 }

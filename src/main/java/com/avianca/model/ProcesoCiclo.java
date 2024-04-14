@@ -11,6 +11,6 @@ import java.time.LocalDateTime;
  *
  * @author Lenovo
  */
-public record ProcesoCiclo(Long id, Long procesoId ,String titulo, Boolean asignaTercero, LocalDateTime fechaCreacion){
+public record ProcesoCiclo(Long id, Long procesoPlantillaId ,String titulo, Boolean asignaTercero, LocalDateTime fechaCreacion){
     
 }

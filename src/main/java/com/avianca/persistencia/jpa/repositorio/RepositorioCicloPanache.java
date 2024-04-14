@@ -12,6 +12,6 @@ import jakarta.enterprise.context.ApplicationScoped;
  * @author Lenovo
  */
 @ApplicationScoped
-public class RepositorioEsquemaPanache implements PanacheRepository<RepositorioEsquemaEntity>{
+public class RepositorioCicloPanache implements PanacheRepository<RepositorioCicloEntity>{
     
 }

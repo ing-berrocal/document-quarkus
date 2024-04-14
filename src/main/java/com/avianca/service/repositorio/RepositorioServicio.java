@@ -1,8 +1,8 @@
 package com.avianca.service.repositorio;
 
+import com.avianca.model.RepositorioCiclo;
 import com.avianca.model.RepositorioData;
-import com.avianca.model.RepositorioEsquema;
-import com.avianca.model.RepositorioTitulo;
+import com.avianca.model.RepositorioPlantilla;
 import com.avianca.service.proceso.ProcesoCicloRepostiorioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -16,12 +16,12 @@ import java.util.Optional;
 public class RepositorioServicio {
 
     private final RepositorioTituloRepositorio repositorioTituloRepository;
-    private final RepositorioEsquemaRepository repositorioEsquemaRepository;
+    private final RepositorioCicloRepository repositorioEsquemaRepository;
     private final RepositorioDataRepository repositorioDataRepository;
     private final ProcesoCicloRepostiorioRepository procesoCicloRepostiorioRepository;
 
     public RepositorioServicio(RepositorioTituloRepositorio repositorioTituloRepository,
-            RepositorioEsquemaRepository repositorioEsquemaRepository,
+            RepositorioCicloRepository repositorioEsquemaRepository,
             RepositorioDataRepository repositorioDataRepository,
             ProcesoCicloRepostiorioRepository procesoCicloRepostiorioRepository) {
         this.repositorioTituloRepository = repositorioTituloRepository;
@@ -30,17 +30,17 @@ public class RepositorioServicio {
         this.procesoCicloRepostiorioRepository = procesoCicloRepostiorioRepository;
     }
 
-    public List<RepositorioEsquema> getRepositorio(Long empresaId) {
+    public List<RepositorioCiclo> getRepositorio(Long empresaId) {
         return repositorioEsquemaRepository.getRepositorio(empresaId);
     }
 
     @Transactional
-    public RepositorioEsquema agregarEsquema(Long empresaId,
-            RepositorioEsquema esquema) {
+    public RepositorioCiclo agregarEsquema(Long empresaId,
+            RepositorioCiclo esquema) {
 
-        Optional<RepositorioTitulo> obtenerById = repositorioTituloRepository.obtenerById(empresaId, null,esquema.codigo());
+        Optional<RepositorioPlantilla> obtenerById = repositorioTituloRepository.obtenerById(empresaId, null,esquema.codigo());
 
-        RepositorioTitulo rt = obtenerById.orElseThrow(() -> {
+        RepositorioPlantilla rt = obtenerById.orElseThrow(() -> {
             throw new RuntimeException("No existe titulo para empresa");
         });
 
@@ -52,7 +52,7 @@ public class RepositorioServicio {
         return repositorioEsquemaRepository.agregar(empresaId, esquema);
     }
 
-    public Optional<RepositorioEsquema> getEsquemaById(Long empresaId, Long Id) {
+    public Optional<RepositorioCiclo> getEsquemaById(Long empresaId, Long Id) {
         return repositorioEsquemaRepository.getById(empresaId, Id);
     }
     
@@ -65,9 +65,9 @@ public class RepositorioServicio {
             Long repositorioId,
             RepositorioData data) {
 
-        Optional<RepositorioEsquema> byId = repositorioEsquemaRepository.getById(empresaId,repositorioId);
+        Optional<RepositorioCiclo> byId = repositorioEsquemaRepository.getById(empresaId,repositorioId);
 
-        RepositorioEsquema orElseThrow = byId.orElseThrow(() -> {
+        RepositorioCiclo orElseThrow = byId.orElseThrow(() -> {
             throw new RuntimeException("No existe esquema para la empresa");
         });
         
@@ -76,17 +76,17 @@ public class RepositorioServicio {
     }
     
     @Transactional
-    public RepositorioEsquema agregarRepositorio(
+    public RepositorioCiclo agregarRepositorio(
             Long empresaId,
             Long cicloId,
             Long repositorioTituloId,
             
-            RepositorioEsquema esquema,
+            RepositorioCiclo esquema,
             RepositorioData data) {
 
-        Optional<RepositorioTitulo> obtenerById = repositorioTituloRepository.obtenerById(empresaId, repositorioTituloId, esquema.codigo());
+        Optional<RepositorioPlantilla> obtenerById = repositorioTituloRepository.obtenerById(empresaId, repositorioTituloId, esquema.codigo());
 
-        RepositorioTitulo rt = obtenerById.orElseThrow(() -> {
+        RepositorioPlantilla rt = obtenerById.orElseThrow(() -> {
             throw new RuntimeException("No existe titulo para empresa");
         });
 
@@ -96,9 +96,9 @@ public class RepositorioServicio {
             }
         }
         
-        RepositorioEsquema esquemaTmp = new RepositorioEsquema(null, repositorioTituloId, rt.codigo(),"pdf",esquema.fechaVencimiento());
+        RepositorioCiclo esquemaTmp = new RepositorioCiclo(null, repositorioTituloId, rt.codigo(),"pdf",esquema.fechaVencimiento());
         
-        RepositorioEsquema esquemaAgregado = repositorioEsquemaRepository.agregar(empresaId, esquemaTmp);
+        RepositorioCiclo esquemaAgregado = repositorioEsquemaRepository.agregar(empresaId, esquemaTmp);
         
         repositorioDataRepository.agregar(esquemaAgregado.id(), new RepositorioData(esquemaTmp.formato(), data.data()));
         

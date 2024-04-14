@@ -12,20 +12,20 @@ import jakarta.persistence.Embeddable;
  * @author Lenovo
  */
 @Embeddable
-public class RepositorioTituloProcesoPK {
+public class ProcesoRepositorioPlantillaPK {
     
-    public RepositorioTituloProcesoPK(){}
+    public ProcesoRepositorioPlantillaPK(){}
     
-     public RepositorioTituloProcesoPK(Long repositorioTituloId, Long procesoId) {
+     public ProcesoRepositorioPlantillaPK(Long repositorioTituloId, Long procesoId) {
             this.repositorioTituloId = repositorioTituloId;
             this.procesoId = procesoId;
         }
         
-        @Column(name = "REPOSITORIO_TITULO_ID",nullable = false)
+        @Column(name = "REPOSITORIO_PLANTILLA_ID",nullable = false)
         //@ManyToOne
         //@JoinColumn(name = "REPOSITORIO_TITULO_ID")
         private Long repositorioTituloId;
-        @Column(name = "PROCESO_ID",nullable = false)
+        @Column(name = "PROCESO_PLANTILLA_ID",nullable = false)
         //@ManyToOne
         //@JoinColumn(name = "PROCESO_ID")
         private Long procesoId;

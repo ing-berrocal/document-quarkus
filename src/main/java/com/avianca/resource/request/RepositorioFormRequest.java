@@ -3,9 +3,6 @@ package com.avianca.resource.request;
 import jakarta.ws.rs.FormParam;
 import java.io.File;
 
-import org.jboss.resteasy.plugins.providers.multipart.InputPart;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-
 public class RepositorioFormRequest {
     
     @FormParam("codigo")

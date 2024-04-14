@@ -10,9 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
-@Table(name = "REPOSITORIO")
+@Table(name = "REPOSITORIO_CICLO")
 @Entity
-public class RepositorioEsquemaEntity {
+public class RepositorioCicloEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,8 +23,8 @@ public class RepositorioEsquemaEntity {
     private LocalDateTime fechaCreacion;
     @Column(name = "FECHA_VENCIMIENTO")
     private LocalDate fechaVencimiento;
-    @Column(name = "REPOSITORIO_TITULO_ID")
-    private Long repositorioTituloId;
+    @Column(name = "REPOSITORIO_PLANTILLA_ID")
+    private Long repositorioPlantillaId;
 
     public Long getId() {
         return id;
@@ -58,11 +58,13 @@ public class RepositorioEsquemaEntity {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public void setRepositorioTituloId(Long repositorioTituloId) {
-        this.repositorioTituloId = repositorioTituloId;
+    public void setRepositorioPlantillaId(Long repositorioPlantillaId) {
+        this.repositorioPlantillaId = repositorioPlantillaId;
     }
 
-    public Long getRepositorioTituloId() {
-        return repositorioTituloId;
+    public Long getRepositorioPlantillaId() {
+        return repositorioPlantillaId;
     }
+    
+    
 }

@@ -1,7 +1,7 @@
 package com.avianca.resource;
 
 import com.avianca.model.RepositorioData;
-import com.avianca.model.RepositorioEsquema;
+import com.avianca.model.RepositorioCiclo;
 import com.avianca.resource.response.Pagination;
 import com.avianca.resource.response.ResponseCollection;
 import com.avianca.service.repositorio.RepositorioServicio;
@@ -15,20 +15,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 
-@Path("/repositorio/esquema")
+@Path("/repositorio/ciclo")
 //@Consumes(MediaType.APPLICATION_JSON)
-public class RepositorioEsquemaResource {
+public class RepositorioCicloResource {
     
     private final RepositorioServicio repositorioServicio;
 
-    public RepositorioEsquemaResource(RepositorioServicio repositorioServicio) {
+    public RepositorioCicloResource(RepositorioServicio repositorioServicio) {
         this.repositorioServicio = repositorioServicio;
     }
     
@@ -44,8 +42,8 @@ public class RepositorioEsquemaResource {
     }
     
     @POST
-    public Response agregar(RepositorioEsquema esquema){
-        RepositorioEsquema agregarEsquema = repositorioServicio.agregarEsquema(Long.valueOf("1"), esquema);
+    public Response agregar(RepositorioCiclo esquema){
+        RepositorioCiclo agregarEsquema = repositorioServicio.agregarEsquema(Long.valueOf("1"), esquema);
         return Response.ok(agregarEsquema).build();
     }
     
@@ -85,7 +83,7 @@ public class RepositorioEsquemaResource {
         /*} catch (IOException ex) { 
             Logger.getLogger(RepositorioDataResource.class.getName()).log(Level.SEVERE, null, ex);
         }*/
-        RepositorioEsquema esquema = new RepositorioEsquema(null, repositorioTituloId, null,abc.formato,getFechaVencimiento(input));
+        RepositorioCiclo esquema = new RepositorioCiclo(null, repositorioTituloId, null,abc.formato,getFechaVencimiento(input));
                 
         RepositorioData data = new RepositorioData(abc.formato, stream.toByteArray());
         
@@ -127,7 +125,7 @@ public class RepositorioEsquemaResource {
             return LocalDate.parse(formatDate);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
-            Logger.getLogger(RepositorioEsquemaResource.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorioCicloResource.class.getName()).log(Level.SEVERE, null, ex);
            
         }
         return null;

@@ -4,12 +4,11 @@
  */
 package com.avianca.persistencia.repository;
 
-import com.avianca.model.Proceso;
 import com.avianca.model.ProcesoCiclo;
 import com.avianca.persistencia.jpa.proceso.ProcesoCicloEntity;
 import com.avianca.persistencia.jpa.proceso.ProcesoCicloPanache;
-import com.avianca.persistencia.jpa.proceso.ProcesoCicloRepositorioPanache;
-import com.avianca.persistencia.jpa.proceso.ProcesoEntity;
+import com.avianca.persistencia.jpa.proceso.ProcesoCicloRepositorioCicloPanache;
+import com.avianca.persistencia.jpa.proceso.ProcesoPlatillaEntity;
 import com.avianca.persistencia.jpa.repositorioproceso.RepositorioProcesoCicloEntity;
 import com.avianca.persistencia.jpa.repositorioproceso.RepositorioProcesoCicloPanache;
 import com.avianca.service.proceso.ProcesoCicloRepository;
@@ -26,27 +25,27 @@ public class ProcesoCicloRepositoryImp implements ProcesoCicloRepository{
 
     private final ProcesoCicloPanache procesoCicloPanache;
     private final RepositorioProcesoCicloPanache repositorioProcesoCicloPanache;
-    private final ProcesoCicloRepositorioPanache procesoCicloRepositorioPanache;
+    private final ProcesoCicloRepositorioCicloPanache procesoCicloRepositorioPanache;
 
     public ProcesoCicloRepositoryImp(ProcesoCicloPanache procesoCicloPanache,
             RepositorioProcesoCicloPanache repositorioProcesoCicloPanache,
-            ProcesoCicloRepositorioPanache procesoCicloRepositorioPanache) {
+            ProcesoCicloRepositorioCicloPanache procesoCicloRepositorioPanache) {
         this.procesoCicloPanache = procesoCicloPanache;
         this.repositorioProcesoCicloPanache = repositorioProcesoCicloPanache;
         this.procesoCicloRepositorioPanache = procesoCicloRepositorioPanache;
     }
     
     @Override
-    public ProcesoCiclo crearCiclo(Proceso proceso) {
+    public ProcesoCiclo crearCiclo(ProcesoCiclo procesoCreacion) {
         
-        ProcesoEntity procesoEntity = new ProcesoEntity();
-        procesoEntity.setId(proceso.id());
+        ProcesoPlatillaEntity procesoEntity = new ProcesoPlatillaEntity();
+        procesoEntity.setId(procesoCreacion.procesoPlantillaId());
         
         ProcesoCicloEntity entity = new ProcesoCicloEntity();
         entity.setFechaCreacion(LocalDateTime.now());
         entity.setProcesoEntity(procesoEntity);
         entity.setTerminado(Boolean.FALSE);
-        //entity.setFechaValidoHasta(proceso.);
+        entity.setTitulo(procesoCreacion.titulo());
         
         procesoCicloPanache.persist(entity);  
         

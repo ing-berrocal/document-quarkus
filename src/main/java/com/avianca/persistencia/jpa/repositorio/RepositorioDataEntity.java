@@ -6,12 +6,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
-@Table(name = "REPOSITORIO_DATA")
+@Table(name = "REPOSITORIO_CICLO_DATA")
 @Entity
 public class RepositorioDataEntity {
     
     @Id
-    @Column(name = "REPOSITORIO_ID")
+    @Column(name = "REPOSITORIO_CICLO_ID")
     private Long id;
     @Column(name = "FORMATO",nullable = false)
     private String formato;

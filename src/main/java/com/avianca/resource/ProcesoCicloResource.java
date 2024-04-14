@@ -4,8 +4,8 @@
  */
 package com.avianca.resource;
 
-import com.avianca.model.view.ViewProcesoCicloRepositio;
-import com.avianca.model.view.ViewProcesoCiclo;
+import com.avianca.model.ProcesoCiclo;
+import com.avianca.model.exception.ItemNotFound;
 import com.avianca.resource.request.ProcesoCicloRequest;
 import com.avianca.resource.response.Pagination;
 import com.avianca.resource.response.ResponseCollection;
@@ -21,7 +21,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
 
 /**
  *
@@ -43,7 +42,7 @@ public class ProcesoCicloResource {
     @GET
     @Path("/{id}")
     public ResponseObject getProcesoById(@PathParam("id") Long procesoId){
-        return new ResponseObject(procesoCicloServicio.getProcesoById(procesoId, 0L).orElseGet(()->new ViewProcesoCiclo(null,null,null,null,null)));
+        return new ResponseObject(procesoCicloServicio.getProcesoById(procesoId, 0L).orElseThrow(()->ItemNotFound.getInstance("No existe proceso-ciclo")));
     }
     
     @GET
@@ -53,9 +52,13 @@ public class ProcesoCicloResource {
     }
     
     @POST
-    @Path("/{procesoId}")
-    public Response crearProceso(@PathParam("procesoId") Long procesoId, ProcesoCicloRequest request){
-        procesoCicloServicio.agregar(1L,procesoId,null);
+    public Response crearProceso(ProcesoCicloRequest request){
+        
+        ProcesoCiclo procesoCiclo = new ProcesoCiclo(null, 
+                request.procesoPlantillaId(), 
+                request.titulo(), null, null);
+        
+        procesoCicloServicio.agregar(1L,procesoCiclo);
         return Response.accepted().build();
     }
     

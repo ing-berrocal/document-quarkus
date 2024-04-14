@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class Repositorio {
 
     private Long id;
-    private RepositorioTitulo codigo;
+    private RepositorioPlantilla codigo;
     private String descripcion;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
@@ -20,11 +20,11 @@ public class Repositorio {
         this.id = id;
     }
 
-    public RepositorioTitulo getCodigo() {
+    public RepositorioPlantilla getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(RepositorioTitulo codigo) {
+    public void setCodigo(RepositorioPlantilla codigo) {
         this.codigo = codigo;
     }
 

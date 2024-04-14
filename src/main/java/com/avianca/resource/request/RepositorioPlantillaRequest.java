@@ -8,7 +8,7 @@ package com.avianca.resource.request;
  *
  * @author Lenovo
  */
-public record RepositorioTituloRequest (
+public record RepositorioPlantillaRequest (
         String codigo,
         String titulo,
         String descripcion,

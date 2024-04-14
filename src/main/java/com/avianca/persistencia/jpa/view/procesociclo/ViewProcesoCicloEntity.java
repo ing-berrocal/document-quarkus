@@ -29,15 +29,16 @@ public class ViewProcesoCicloEntity{
     
     @Id
     private Long Id;
-    @Column(name = "PROCESO_ID")
-    private Long procesoId;
-    
+    @Column(name = "PLANTILLA_ID")
+    private Long plantillaId;
     @Column(name = "FECHA_REGISTRO",nullable = false)
     private LocalDateTime fechaCreacion;    
     @Column(name = "EMPRESA_ID")
     private Long empresaId;    
-    @Column(name = "TITULO",nullable = false)
-    private String titulo;        
+    @Column(name = "PLANTILLA_TITULO",nullable = false)
+    private String pantillaTitulo;
+    @Column(name = "CICLO_TITULO",nullable = false)
+    private String cicloTitulo;
     @Column(name = "FECHA_VALIDO_HASTA",nullable = false)
     private LocalDate fechaValidoHasta;        
     @Transient
@@ -51,12 +52,28 @@ public class ViewProcesoCicloEntity{
         this.Id = Id;
     }
 
-    public Long getProcesoId() {
-        return procesoId;
+    public Long getPlantillaId() {
+        return plantillaId;
     }
 
-    public void setProcesoId(Long procesoId) {
-        this.procesoId = procesoId;
+    public void setPlantillaId(Long plantillaId) {
+        this.plantillaId = plantillaId;
+    }
+
+    public String getCicloTitulo() {
+        return cicloTitulo;
+    }
+
+    public void setCicloTitulo(String cicloTitulo) {
+        this.cicloTitulo = cicloTitulo;
+    }
+
+    public String getPantillaTitulo() {
+        return pantillaTitulo;
+    }
+
+    public void setPantillaTitulo(String pantillaTitulo) {
+        this.pantillaTitulo = pantillaTitulo;
     }
 
     public LocalDateTime getFechaCreacion() {
@@ -74,14 +91,6 @@ public class ViewProcesoCicloEntity{
     public void setEmpresaId(Long empresaId) {
         this.empresaId = empresaId;
     }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }    
 
     public LocalDate getFechaValidoHasta() {
         return fechaValidoHasta;

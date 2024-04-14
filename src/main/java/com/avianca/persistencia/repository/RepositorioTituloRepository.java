@@ -4,11 +4,12 @@
  */
 package com.avianca.persistencia.repository;
 
-import com.avianca.model.Proceso;
-import com.avianca.model.RepositorioTitulo;
-import com.avianca.persistencia.jpa.repositorio.RepositorioTituloEntity;
-import com.avianca.persistencia.jpa.repositorio.RepositorioTituloPanache;
+import com.avianca.model.ProcesoPlantilla;
+import com.avianca.model.RepositorioPlantilla;
+import com.avianca.persistencia.jpa.repositorio.RepositorioPlantillaEntity;
+import com.avianca.persistencia.jpa.repositorio.RepositorioPlantillaPanache;
 import com.avianca.service.repositorio.RepositorioTituloRepositorio;
+import io.quarkus.panache.common.Parameters;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.time.LocalDateTime;
@@ -22,28 +23,28 @@ import java.util.Optional;
 @ApplicationScoped
 public class RepositorioTituloRepository implements RepositorioTituloRepositorio{
 
-    private final RepositorioTituloPanache repositorioTituloPanache;
+    private final RepositorioPlantillaPanache repositorioTituloPanache;
     
-    public RepositorioTituloRepository(RepositorioTituloPanache repositorioTituloPanache) {
+    public RepositorioTituloRepository(RepositorioPlantillaPanache repositorioTituloPanache) {
         this.repositorioTituloPanache = repositorioTituloPanache;
     }
     
     @Override
-    public List<RepositorioTitulo> getTitulos(Long empresaId) {
+    public List<RepositorioPlantilla> getTitulos(Long empresaId) {
         return repositorioTituloPanache.stream("empresaId", Sort.by("codigo"), empresaId)
-                .map(t -> new RepositorioTitulo(t.getId(),t.getCodigo(), 
+                .map(t -> new RepositorioPlantilla(t.getId(),t.getCodigo(), 
                         t.getTitulo(), 
                         t.getDescripcion(), 
                         t.getTieneFechaVencimiento(),
                 t.getFechaCreacion(),
-                        new Proceso[]{new Proceso(1L, "Hola", Boolean.TRUE)}))
+                        new ProcesoPlantilla[]{new ProcesoPlantilla(1L, null, "Hola", Boolean.TRUE)}))
                 .toList();
     }
 
     @Override
-    public RepositorioTitulo agregar(Long empresaId, RepositorioTitulo item) {
+    public RepositorioPlantilla agregar(Long empresaId, RepositorioPlantilla item) {
         
-        RepositorioTituloEntity entity = new RepositorioTituloEntity();
+        RepositorioPlantillaEntity entity = new RepositorioPlantillaEntity();
         entity.setEmpresaId(empresaId);
         entity.setCodigo(item.codigo());
         entity.setTitulo(item.titulo());
@@ -52,20 +53,32 @@ public class RepositorioTituloRepository implements RepositorioTituloRepositorio
         entity.setFechaCreacion(LocalDateTime.now());
         repositorioTituloPanache.persist(entity);
         
-        return new RepositorioTitulo(entity.getId(),null,null,null,null,null,null);
+        return new RepositorioPlantilla(entity.getId(),null,null,null,null,null,null);
     }
 
     @Override
-    public Optional<RepositorioTitulo> obtenerById(Long empresaId, Long id, String codigo){
+    public Optional<RepositorioPlantilla> obtenerById(Long empresaId, Long id, String codigo){
         return repositorioTituloPanache.findByIdOptional(id)//.find("empresaId = ?1 and codigo = ?2", empresaId,codigo)
                 //.firstResultOptional()
-                .map(t -> new RepositorioTitulo(t.getId(),t.getCodigo(), 
+                .map(t -> new RepositorioPlantilla(t.getId(),t.getCodigo(), 
                         t.getTitulo(), 
                         t.getDescripcion(), 
                         t.getTieneFechaVencimiento(),
                 t.getFechaCreacion(),
-                new Proceso[0]));
+                new ProcesoPlantilla[0]));
                 
+    }
+
+    @Override
+    public Optional<RepositorioPlantilla> obtenerByCodigo(Long empresaId, String codigo) {
+        return repositorioTituloPanache.find("codigo = :codigo", Parameters.with("codigo", codigo)).firstResultOptional()
+                .map(t -> new RepositorioPlantilla(t.getId(),t.getCodigo(), 
+                        t.getTitulo(), 
+                        t.getDescripcion(), 
+                        t.getTieneFechaVencimiento(),
+                t.getFechaCreacion(),
+                new ProcesoPlantilla[0]));
+               
     }
     
 }

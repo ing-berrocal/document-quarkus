@@ -4,11 +4,11 @@
  */
 package com.avianca.resource;
 
-import com.avianca.model.Proceso;
+import com.avianca.model.ProcesoPlantilla;
 import com.avianca.resource.response.Pagination;
 import com.avianca.resource.response.ResponseCollection;
 import com.avianca.resource.response.ResponseObject;
-import com.avianca.service.proceso.ProcesoServicio;
+import com.avianca.service.proceso.ProcesoPlantillaServicio;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -22,13 +22,13 @@ import jakarta.ws.rs.core.MediaType;
  *
  * @author Lenovo
  */
-@Path("/proceso")
+@Path("/proceso/plantilla")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class ProcesoResource {
+public class ProcesoPlantillaResource {
     
     @Inject
-    private ProcesoServicio procesoServicio;
+    private ProcesoPlantillaServicio procesoServicio;
     
     @GET
     public ResponseCollection getListado(){
@@ -48,7 +48,7 @@ public class ProcesoResource {
     }
     
     @POST
-    public Proceso crearTercero(Proceso procesoParam){
+    public ProcesoPlantilla crearProcesoPlantilla(ProcesoPlantilla procesoParam){
         return procesoServicio.agregar(null,procesoParam);
     }
 }

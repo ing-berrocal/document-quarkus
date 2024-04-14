@@ -6,8 +6,8 @@ package com.avianca.persistencia.repository;
 
 import com.avianca.model.ProcesoCiclo;
 import com.avianca.model.ProcesoTitulo;
-import com.avianca.persistencia.jpa.proceso.ProcesoCicloRepositorioEntity;
-import com.avianca.persistencia.jpa.proceso.ProcesoCicloRepositorioPanache;
+import com.avianca.persistencia.jpa.proceso.ProcesoCicloRepositorioCicloEntity;
+import com.avianca.persistencia.jpa.proceso.ProcesoCicloRepositorioCicloPanache;
 import com.avianca.service.proceso.ProcesoCicloRepostiorioRepository;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -21,9 +21,9 @@ import java.util.List;
 @ApplicationScoped
 public class ProcesoCicloRepostiorioRepositoryImp implements ProcesoCicloRepostiorioRepository{
 
-    private final ProcesoCicloRepositorioPanache procesoCicloRepositorioPanache;
+    private final ProcesoCicloRepositorioCicloPanache procesoCicloRepositorioPanache;
 
-    public ProcesoCicloRepostiorioRepositoryImp(ProcesoCicloRepositorioPanache procesoCicloRepositorioPanache) {
+    public ProcesoCicloRepostiorioRepositoryImp(ProcesoCicloRepositorioCicloPanache procesoCicloRepositorioPanache) {
         this.procesoCicloRepositorioPanache = procesoCicloRepositorioPanache;
     }
     
@@ -35,10 +35,10 @@ public class ProcesoCicloRepostiorioRepositoryImp implements ProcesoCicloReposti
         
         repositorioTitulos.stream()
                 .map(pt->{
-                    ProcesoCicloRepositorioEntity entity = new ProcesoCicloRepositorioEntity();
+                    ProcesoCicloRepositorioCicloEntity entity = new ProcesoCicloRepositorioCicloEntity();
                     
                     entity.setProcesoCicloId(procesoCiclo.id());
-                    entity.setRepositorioTituloId(pt.tituloId());
+                    entity.setRepositorioPlantillaId(pt.tituloId());
                     entity.setFechaCreacion(now);
                     
                     return entity;
@@ -47,7 +47,7 @@ public class ProcesoCicloRepostiorioRepositoryImp implements ProcesoCicloReposti
 
     @Override
     public int relacionarCicloRepoTituloData(Long procesoCicloId, Long repositorioTituloId, Long repositorioId){
-        return procesoCicloRepositorioPanache.update(ProcesoCicloRepositorioEntity.OBTENER_POR_PROCESOS,
+        return procesoCicloRepositorioPanache.update(ProcesoCicloRepositorioCicloEntity.OBTENER_POR_PROCESOS,
                 Parameters.with("procesoCicloId", procesoCicloId)
                         .and("repositorioTituloId", repositorioTituloId)
                         .and("repositorioId", repositorioId).map());

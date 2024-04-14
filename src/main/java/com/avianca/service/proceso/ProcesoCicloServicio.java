@@ -4,14 +4,15 @@
  */
 package com.avianca.service.proceso;
 
-import com.avianca.model.Proceso;
+import com.avianca.model.ProcesoPlantilla;
 import com.avianca.model.ProcesoCiclo;
 import com.avianca.model.ProcesoTitulo;
-import com.avianca.model.RepositorioEsquema;
+import com.avianca.model.RepositorioCiclo;
+import com.avianca.model.exception.ItemValidacion;
 import com.avianca.model.view.ViewProcesoCicloRepositio;
 import com.avianca.model.view.ViewProcesoCiclo;
-import com.avianca.service.procesotitulo.ProcesoTituloRepositorio;
-import com.avianca.service.repositorio.RepositorioEsquemaRepository;
+import com.avianca.service.procesorepositorioplantilla.ProcesoRepositorioPlantillaRepository;
+import com.avianca.service.repositorio.RepositorioCicloRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -24,24 +25,24 @@ import java.util.Optional;
 @ApplicationScoped
 public class ProcesoCicloServicio {
 
-    private final ProcesoRepository repository;
+    private final ProcesoPlantillaRepository repository;
     private final ProcesoCicloRepository procesoCicloRepository;
-    private final ProcesoTituloRepositorio procesoTituloRepositorio;
-    private final RepositorioEsquemaRepository repositorioEsquemaRepository;
+    private final ProcesoRepositorioPlantillaRepository procesoRepositorioPlantillaRepository;
+    private final RepositorioCicloRepository repositorioEsquemaRepository;
     private final ViewProcesoCicloRepository viewProcesoCicloRepository;
     private final ProcesoCicloRepostiorioRepository procesoCicloRepostiorioRepository;
     private final ViewProcesoCicloRepositorioRepository viewProcesoCicloRepositorioRepository;
     
-    public ProcesoCicloServicio(ProcesoRepository repository,
+    public ProcesoCicloServicio(ProcesoPlantillaRepository repository,
             ProcesoCicloRepository procesoCicloRepository,
-            ProcesoTituloRepositorio procesoTituloRepositorio,
-            RepositorioEsquemaRepository repositorioEsquemaRepository,
+            ProcesoRepositorioPlantillaRepository procesoRepositorioPlantillaRepository,
+            RepositorioCicloRepository repositorioEsquemaRepository,
             ViewProcesoCicloRepository viewProcesoCicloRepository,
             ProcesoCicloRepostiorioRepository procesoCicloRepostiorioRepository,
             ViewProcesoCicloRepositorioRepository viewProcesoCicloRepositorioRepository) {
         this.repository = repository;
         this.procesoCicloRepository = procesoCicloRepository;
-        this.procesoTituloRepositorio = procesoTituloRepositorio;
+        this.procesoRepositorioPlantillaRepository = procesoRepositorioPlantillaRepository;
         this.repositorioEsquemaRepository = repositorioEsquemaRepository;
         this.viewProcesoCicloRepository = viewProcesoCicloRepository;
         this.procesoCicloRepostiorioRepository = procesoCicloRepostiorioRepository;
@@ -49,23 +50,21 @@ public class ProcesoCicloServicio {
     }
     
     @Transactional
-    public ProcesoCiclo agregar(Long empresaId, Long procesoId, Long terceroId){
+    public ProcesoCiclo agregar(Long empresaId, ProcesoCiclo procesoCicloCreacion){
         
-        Optional<Proceso> procesoById = repository.getProcesoById(empresaId, procesoId);
+        Optional<ProcesoPlantilla> procesoById = repository.getProcesoById(empresaId, procesoCicloCreacion.procesoPlantillaId());
         
         if(procesoById.isEmpty()){
-            throw new RuntimeException("No existe proceso");
+            throw ItemValidacion.getInstance("No existe proceso-plantilla");
         }
                 
-        List<ProcesoTitulo> repositorioTitulos = procesoTituloRepositorio.getRepositorioTitulos(empresaId, procesoId);
+        List<ProcesoTitulo> repositorioTitulos = procesoRepositorioPlantillaRepository.getRepositorioTitulos(empresaId, procesoCicloCreacion.procesoPlantillaId());
         
         if(repositorioTitulos.isEmpty()){
-            throw new RuntimeException("No existe titulos para proceso");
-        }
+            throw ItemValidacion.getInstance("No existe repositorios para proceso");
+        }                
         
-        Proceso proceso = procesoById.get();               
-        
-        ProcesoCiclo cicloCreado = procesoCicloRepository.crearCiclo(proceso);
+        ProcesoCiclo cicloCreado = procesoCicloRepository.crearCiclo(procesoCicloCreacion);
         
         procesoCicloRepostiorioRepository.agregarProcesoCicloRepositorioTitulo(cicloCreado, repositorioTitulos);
         
@@ -84,15 +83,15 @@ public class ProcesoCicloServicio {
         
         ProcesoCiclo procesoCiclo = procesoCicloById.get();
         
-        Optional<RepositorioEsquema> byId = repositorioEsquemaRepository.getById(empresaId, repositorioId);
+        Optional<RepositorioCiclo> byId = repositorioEsquemaRepository.getById(empresaId, repositorioId);
         
         if(byId.isEmpty()){
             throw new RuntimeException("No existe repositorio");
         }
         
-        RepositorioEsquema repositorioEsquema = byId.get();
+        RepositorioCiclo repositorioEsquema = byId.get();
         
-        if(procesoTituloRepositorio.existeTituloEnRepostorio(procesoCiclo.procesoId(), repositorioEsquema.repositorioTituloId())){
+        if(procesoRepositorioPlantillaRepository.existeTituloEnRepostorio(procesoCiclo.procesoPlantillaId(), repositorioEsquema.repositorioPlantillaId())){
             procesoCicloRepository.agregarRepositorio(procesoCicloById.get(), repositorioEsquema.id());
         }else{
             throw new RuntimeException("Repositorio Titulo no esta en proceso");
